@@ -1,0 +1,53 @@
+-- pm2 --
+
+-> Utilizado para execução em produção
+yarn pm2 monit
+yarn pm2 status
+yarn production -f 
+yarn pm2 restart
+yarn pm2 restart nome_da_app
+yarn pm2 0
+yarn pm2 kill
+
+-- Instalando o DB - Postgree --
+
+O Postgres é um BD relacional, ou seja, para persistir os dados,
+devem ser criadas tabelas, colunas e relacionamentos.
+BD não relacionais, não necessitam ter esquema, os dados são gravados sem 
+tanta burocracia. Exemplo: MongooDB
+
+1. Instala o Postgree na máquina
+2. Criar as variáveis de sessão
+    http://cotrimpira.blogspot.com/2011/09/configurando-variaveis-de-ambiente-para.html
+    pguser              postgres
+    pgpassword          pgsql
+    pgpath              C:\PostgreSQL\9.0
+    path                %pgpath%\bin
+3. Teste:
+    psql --version    
+4. Instalar dependências
+    yarn add i knex -g (sudo npm i knex -g)  
+5. Passos para a criação do banco
+    psql -U postgres       -> setta o usuário
+    \l                     -> lista os databases disponíveis 
+    CREATE DATABASE tasks; -> criar um banco de dados chamado tasks
+    \c tasks               -> Conecta ao database tasks 
+    \dt                    -> Lista tabelas criadas
+    \q                     -> Sai do postgres
+6. Comandos
+    yarn knex init         -> vai ser criado um knexfile.js (config. para conectar com o banco)    
+7. Criando as migrations
+    yarn knex migrate:make create_table_users  -> cria uma pasta migrations e um arquivo  
+    yarn knex migrate:make create_table_tasks  -> cria uma nova migration na pasta criada
+
+
+-- Status --    
+
+Status 500 - erro do lado do servidor
+    - Servidor inoperante
+    - Falha na comunicação
+Status 400 - erro do lado do cliente
+    - Não mandou nome
+    - Email inválido
+    - Data inválida
+Status 204 - Deu certo, porém, não existe conteúdo para resposta 
